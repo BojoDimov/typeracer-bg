@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  src: url('./assets/font/FiraSansBGR-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  font-weight: 500;
+  src: url('./assets/font/FiraSansBGR-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  font-weight: 700;
+  src: url('./assets/font/FiraSansBGR-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  font-style: italic;
+  src: url('./assets/font/FiraSansBGR-Italic.otf') format('opentype');
+}
+
+html, body {
+  font-family: 'Fira Sans Condensed';
+  font-size: 18px;
+}

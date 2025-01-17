@@ -1,0 +1,13 @@
+<div id="content">
+  <button id="start" (click)="start()">Старт</button>
+  <p id="text">
+    <span id="completed">{{completed}}</span>
+    <span>{{remaining}}</span>
+  </p>
+  <input type="text" [ngModel]="input" (input)="updateProgress($event)"/>
+
+  <!-- We have started and we are done -->
+  @if (currentSnapshot.length && remaining.length === 0) {
+    <div id="bravo">Браво!</div>
+  }
+</div>

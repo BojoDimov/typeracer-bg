@@ -13,7 +13,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "typeracer-bg",
             "outputPath": {
               "base": "./docs",
               "browser": ""
@@ -37,9 +36,11 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "typeracer-bg",
               "outputHashing": "all"
             },
             "development": {
+              "baseHref": "",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

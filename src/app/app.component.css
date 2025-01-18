@@ -29,7 +29,12 @@
   color: #8ebd00;
 }
 
+#wrong {
+  background-color: salmon;
+}
+
 input {
   padding: 8px 12px;
   border-radius: 5px;
+  font-size: 20px;
 }

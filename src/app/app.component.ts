@@ -5,6 +5,8 @@ import B from './parsed_bible.json';
 
 const bible = <string[]>B;
 
+const MAX_WRONG = 5;
+
 @Component({
   selector: 'app-root',
   imports: [CommonModule, FormsModule],
@@ -13,34 +15,56 @@ const bible = <string[]>B;
 })
 export class AppComponent {
   currentSnapshot = '';
-  completed = '';
-  remaining = '';
+  // Count of completed characters
+  completed = 0;
+  // Count of wrong symbols
+  wrong = 0;
+  // Count of remaining symbols
+  remaining = 0;
+  // Index of the current cursor. This is completed + wrong
+  cursor = 0;
   input = '';
+  startTime?: Date;
+  wpm?: number;
 
   start() {
     this.currentSnapshot = this.snapshot();
     this.input = '';
-    this.completed = '';
-    this.remaining = this.currentSnapshot;
+    this.completed = 0;
+    this.wrong = 0;
+    this.cursor = 0;
+    this.remaining = this.currentSnapshot.length;
+    this.startTime = new Date();
   }
 
   updateProgress(event: Event) {
-    console.log(event);
     let character = (<InputEvent>event).data;
-
-    if (this.currentSnapshot[this.completed.length] === character) {
-      this.completed += character;
-      this.remaining = this.currentSnapshot.slice(this.completed.length);
+    if (character === null && this.wrong > 0) {
+      this.wrong--;
+      this.remaining++;
+    } else if (character !== null) {
+      if (
+        this.wrong > 0 ||
+        character !== this.currentSnapshot[this.completed]
+      ) {
+        if (this.wrong < MAX_WRONG) {
+          this.wrong++;
+          this.remaining--;
+        }
+      } else {
+        this.completed++;
+        this.remaining--;
+        // Reset input on whole word guessed
+        if (character === ' ') {
+          this.input = '';
+        }
+      }
     }
 
-    if (character === null) {
-      this.input = this.input.slice(0, -1);
-    } else {
-      this.input += character;
-    }
-
-    if (character === ' ') {
-      this.input = '';
+    if (this.startTime) {
+      let minutes = (Date.now() - this.startTime.getTime()) / (60 * 1000);
+      let words = this.completed / 5;
+      this.wpm = Math.round(words / minutes);
     }
   }
 

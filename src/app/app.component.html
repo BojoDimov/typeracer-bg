@@ -1,13 +1,18 @@
 <div id="content">
   <button id="start" (click)="start()">Старт</button>
   <p id="text">
-    <span id="completed">{{completed}}</span>
-    <span>{{remaining}}</span>
+    <span id="completed">{{currentSnapshot.slice(0, completed)}}</span>
+    <span id="wrong">{{currentSnapshot.slice(completed, completed + wrong)}}</span>
+    <span>{{currentSnapshot.slice(completed + wrong)}}</span>
   </p>
-  <input type="text" [ngModel]="input" (input)="updateProgress($event)"/>
+  <input type="text" [(ngModel)]="input" (input)="updateProgress($event)"/>
+
+  @if (wpm) {
+    <div>{{wpm}} WPM</div>
+  }
 
   <!-- We have started and we are done -->
-  @if (currentSnapshot.length && remaining.length === 0) {
+  @if (currentSnapshot.length && remaining === 0) {
     <div id="bravo">Браво!</div>
   }
 </div>
